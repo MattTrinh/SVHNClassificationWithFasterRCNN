@@ -1,4 +1,1 @@
-# Force empty data folder into Git
-!data
-# Git ignores
 data/*
