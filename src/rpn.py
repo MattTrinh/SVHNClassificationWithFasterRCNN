@@ -24,10 +24,6 @@ def nms(boxes, scores, max_proposals, overlap_thresh):
     indices = tf.image.non_max_suppression(boxes, scores, max_proposals, overlap_thresh)
     return indices
     
-# ROI Pooling function
-def roi_pool():
-    return 0
-    
 # Balance ROIs between negative and positive samples
 def balance_samples(samples, config):
     pos_samples = np.where(samples[0, :, -1] == 0)
