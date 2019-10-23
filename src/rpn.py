@@ -42,7 +42,7 @@ def rpn_loss_box(num_anchors):
         huber_loss = 0.5 * K.square(quadratic) + 1.0 * linear
         
         return balanced_weight * K.sum(ground_truth * huber_loss) / n_reg
-    return rpn_loss_box_fixed
+    return rpn_loss_box_fixed_num
     
 # Loss function for positive/negative regions (i.e. background or object)
 def rpn_loss_bin(num_anchors):
@@ -55,3 +55,4 @@ def rpn_loss_bin(num_anchors):
         
         # Note that binary cross entropy loss is a log loss function
         return K.sum(K.binary_crossentropy(predictions, ground_truth)) / n_cls
+    return rpn_loss_bin_fixed_num
