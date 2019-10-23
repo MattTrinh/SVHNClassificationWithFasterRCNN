@@ -3,7 +3,8 @@ The goal of this project is to train a Faster R-CNN model with the SVHN dataset 
 
 ## Notes
 - Data files removed due to size. The assumption is that the dataset is located in the "data" folder in the main directory.
-- Region Proposal Network (RPN) implemented mostly along the lines of the original paper found [here](https://papers.nips.cc/paper/5638-faster-r-cnn-towards-real-time-object-detection-with-region-proposal-networks.pdf)
+- Region Proposal Network (RPN) implemented mostly along the lines of the original paper found [here](https://papers.nips.cc/paper/5638-faster-r-cnn-towards-real-time-object-detection-with-region-proposal-networks.pdf).
+	- If the original paper was unclear on implementation, the repository [here](https://github.com/you359/Keras-FasterRCNN) was used.
 
 ## References
 
