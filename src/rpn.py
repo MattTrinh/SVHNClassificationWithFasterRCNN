@@ -24,6 +24,31 @@ def nms(boxes, scores, max_proposals, overlap_thresh):
     indices = tf.image.non_max_suppression(boxes, scores, max_proposals, overlap_thresh)
     return indices
     
+# ROI Pooling function
+def roi_pool():
+    return 0
+    
+# Balance ROIs between negative and positive samples
+def balance_samples(samples, config):
+    pos_samples = np.where(samples[0, :, -1] == 0)
+    neg_samples = np.where(samples[0, :, -1] == 1)
+    half_num_rois = config.max_proposals // 2:
+    
+    # Select number of positive samples
+    if len(pos_samples) > half_num_rois: # More than half are positive samples
+        selected_pos_samples = np.random.choice(pos_samples, half_num_rois, replace=False).toList()
+    else: 
+        selected_pos_samples = pos_samples.toList()
+        
+    # Select number of negative samples to fill in rest of samples
+    if len(neg_samples) + len(selected_pos_samples) > config.max_proposals:
+        selected_neg_samples = np.random_choice(neg_samples, config.max_proposals - len(selected_pos_samples), replace=False).toList()
+    else: # Not enough negative samples to meet max proposals, so repeat negative samples
+        selected_neg_samples = np.random_choice(neg_samples, config.max_proposals - len(selected_pos_samples), replace=True).toList()
+        
+    selected_samples = selected_pos_samples + selected_neg_samples
+    return selected_samples
+    
 # Loss function for bounding boxes
 def rpn_loss_box(num_anchors):
     # Need to pass symbolic function that takes the true labels and predictions as arguments
