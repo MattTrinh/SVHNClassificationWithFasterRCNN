@@ -6,7 +6,7 @@ import skimage.color
 import skimage.exposure
 import skimage.io
 import skimage.transform
-
+import time
 
 class BoundingBoxException(Exception):
     pass
@@ -30,6 +30,7 @@ class DictionaryIterator(keras.preprocessing.image.Iterator):
             seed=None,
             shuffle=False
     ):
+        
         if color_mode not in {"grayscale", "rgb"}:
             raise ValueError
 

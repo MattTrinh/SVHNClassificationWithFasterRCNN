@@ -3,7 +3,7 @@
 import keras.backend
 import keras.engine.topology
 import tensorflow
-
+import time
 import keras_rcnn.backend
 
 
@@ -30,7 +30,8 @@ class ObjectDetection(keras.layers.Layer):
         note the box only corresponds to the most probable class, not the
         other classes
         """
-
+        start = time.time()
+        print("Object detection layer called at ", time.time())
         metadata, deltas, proposals, scores = x[0], x[1], x[2], x[3]
 
         bounding_boxes = keras.backend.in_train_phase(
@@ -56,7 +57,7 @@ class ObjectDetection(keras.layers.Layer):
             ),
             training=training
         )
-
+        print("Object detection layer finished call in %5.2f seconds" %((time.time() - start)))
         return [bounding_boxes, scores]
 
     def compute_output_shape(self, input_shape):

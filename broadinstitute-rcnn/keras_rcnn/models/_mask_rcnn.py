@@ -122,6 +122,7 @@ class MaskRCNN(keras.models.Model):
             maximum_proposals=300,
             minimum_size=16
     ):
+        print("Constructing Mask RCNN")
         if anchor_aspect_ratios is None:
             anchor_aspect_ratios = [0.5, 1.0, 2.0]
 
@@ -378,6 +379,7 @@ class MaskRCNN(keras.models.Model):
         ]
 
         super(MaskRCNN, self).__init__(inputs, outputs)
+        print("Mask RCNN complete")
 
     def _mask_network(self):
         def f(x):
@@ -442,9 +444,12 @@ class MaskRCNN(keras.models.Model):
         return f
 
     def compile(self, optimizer, **kwargs):
+        print("Compiling Mask RCNN")
         super(MaskRCNN, self).compile(optimizer, None)
+        print("Mask RCNN compilation complete")
 
     def predict(self, x, batch_size=None, verbose=0, steps=None):
+        print("Calculating Mask RCNN predictions")
         target_bounding_boxes = numpy.zeros((x.shape[0], 1, 4))
 
         target_categories = numpy.zeros((x.shape[0], 1, self.n_categories))
@@ -460,5 +465,5 @@ class MaskRCNN(keras.models.Model):
             target_mask,
             target_metadata
         ]
-
+        print("Returning Mask RCNN predictions")
         return super(MaskRCNN, self).predict(x, batch_size, verbose, steps)
