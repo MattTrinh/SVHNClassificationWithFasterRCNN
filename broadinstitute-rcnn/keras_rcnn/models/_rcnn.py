@@ -121,6 +121,7 @@ class RCNN(keras.models.Model):
             maximum_proposals=300,
             minimum_size=16
     ):
+        print("Constructing RCNN")
         if anchor_aspect_ratios is None:
             anchor_aspect_ratios = [0.5, 1.0, 2.0]
 
@@ -365,11 +366,13 @@ class RCNN(keras.models.Model):
         ]
 
         super(RCNN, self).__init__(inputs, outputs)
+        print("RCNN complete")
 
     def compile(self, optimizer, **kwargs):
         super(RCNN, self).compile(optimizer, None)
 
     def predict(self, x, batch_size=None, verbose=0, steps=None):
+        print("Calculating RCNN predictions")
         target_bounding_boxes = numpy.zeros((x.shape[0], 1, 4))
 
         target_categories = numpy.zeros((x.shape[0], 1, self.n_categories))
@@ -386,4 +389,5 @@ class RCNN(keras.models.Model):
             target_metadata
         ]
 
+        print("RCNN predictions complete")
         return super(RCNN, self).predict(x, batch_size, verbose, steps)

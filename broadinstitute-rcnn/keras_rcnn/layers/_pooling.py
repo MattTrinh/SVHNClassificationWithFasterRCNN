@@ -101,6 +101,7 @@ class RegionOfInterestAlignPyramid(keras.layers.Layer):
         super(RegionOfInterestAlignPyramid, self).build(input_shape)
 
     def call(self, x, **kwargs):
+        print("Calling ROI align pyramid in pooling")
         metadata, boxes, images = x[0], x[1], x[2:]
 
         x1 = boxes[..., 0]
@@ -163,7 +164,7 @@ class RegionOfInterestAlignPyramid(keras.layers.Layer):
         pooled = keras.backend.reshape(pooled, shape)
 
         keras.backend.expand_dims(pooled, axis=0)
-
+        print("pooling completed, returning output")
         return pooled
 
     def compute_output_shape(self, input_shape):
