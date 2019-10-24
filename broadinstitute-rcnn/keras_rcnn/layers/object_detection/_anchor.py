@@ -323,7 +323,9 @@ class Anchor(keras.layers.Layer):
             ones = keras.backend.expand_dims(keras.backend.ones_like(inds_inside), 1)
 
             inds_coords = keras.backend.concatenate([ones * 0, ones, ones * 2, ones * 3], 0)
-
+            # Need to cast coordinates from floats to ints
+            inds_coords = keras_rcnn.backend.cast_to_int(inds_coords, dtype="int32")
+            
             inds_nd = keras.backend.concatenate([inds_ii, inds_coords], 1)
 
         inverse_ret = keras_rcnn.backend.gather_nd(-1 * ret, inds_nd)

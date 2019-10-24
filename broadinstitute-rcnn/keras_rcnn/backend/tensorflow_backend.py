@@ -192,3 +192,12 @@ def unique(x, return_index=False):
 
 def pad(x, pad_width, mode):
     return tensorflow.pad(x, pad_width, mode)
+    
+# Additional casting functions
+def cast_to_int(x, dtype):
+    if dtype == "int32":
+        return tensorflow.dtypes.cast(x, tensorflow.int32)
+    elif dtype == "int64":
+        return tensorflow.dtypes.cast(x, tensorflow.int64)
+    else:
+        raise TypeError("Cannot convert value " + dtype + " to a TensorFlow DType.")

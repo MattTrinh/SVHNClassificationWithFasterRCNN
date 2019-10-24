@@ -1,2 +1,4 @@
 data/*
-src-deprecated/__pycache__
+**__pycache__
+broadinstitute-rcnn/keras_rcnn/data/svhn/train/digitStruct.mat
+broadinstitute-rcnn/keras_rcnn/data/svhn/test/digitStruct.mat
