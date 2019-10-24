@@ -129,7 +129,7 @@ class RCNNMaskLoss(keras.layers.Layer):
             Mean binary cross entropy if IoU between bounding boxes is greater than threshold
 
         """
-
+        print("calculating mask loss")
         target_bounding_box = keras.backend.squeeze(target_bounding_box, axis=0)
         output_bounding_box = keras.backend.squeeze(output_bounding_box, axis=0)
         target_mask = keras.backend.squeeze(target_mask, axis=0)
@@ -160,7 +160,7 @@ class RCNNMaskLoss(keras.layers.Layer):
 
         # TODO: we should try:
         #   `keras.backend.mean(a * b) + keras.backend.mean(1 - b)`
-
+        print("mask loss of ", loss, " calculated")
         return loss
 
     def compute_output_shape(self, input_shape):

@@ -1,5 +1,5 @@
 import numpy
-
+import time
 
 def intersection_over_union(y_true, y_pred):
     """
@@ -9,6 +9,7 @@ def intersection_over_union(y_true, y_pred):
     :return:
 
     """
+    print("Calculating IoU")
     y_true_minimum_r, y_true_minimum_c, y_true_maximum_r, y_true_maximum_c = y_true
     y_pred_minimum_r, y_pred_minimum_c, y_pred_maximum_r, y_pred_maximum_c = y_pred
 
@@ -36,11 +37,12 @@ def intersection_over_union(y_true, y_pred):
     y_pred_area = (y_pred_maximum_r - y_pred_minimum_r + 1) * (y_pred_maximum_c - y_pred_minimum_c + 1)
 
     union = y_true_area + y_pred_area - intersection
-
+    print("Calculated IoU = %5.2f"%(intersection/union))
     return intersection / union
 
 
 def evaluate(y_true, y_pred, threshold=0.5):
+    print("Mean-average precision calculation entered")
     y_true_indices = []
     y_pred_indices = []
 
@@ -87,6 +89,13 @@ def evaluate(y_true, y_pred, threshold=0.5):
         recall = tp / (tp + fn)
     except ZeroDivisionError:
         recall = 0.0
+    try:
+        accuracy = (tp + fp) / scores.size
+    except ZeroDivisionError:
+        accuracy = 0.0
+
+    print("Finished avg_precision calculation. Metrics: FN: %d, FP: %d, TP: %d" %(fn, fp, tp))
+    print("Precision: %5.2f, Recall: %5.2f, Threshold: %5.2f, Accuracy: %5.2f")
 
     return {
         "false negatives": fn,
