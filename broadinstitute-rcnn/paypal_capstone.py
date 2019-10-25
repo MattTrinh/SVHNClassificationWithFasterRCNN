@@ -5,6 +5,7 @@ from keras.preprocessing.image import ImageDataGenerator
 import tensorflow as tf
 import h5py
 from datetime import datetime
+
 import keras_rcnn.datasets.svhn as ds
 import keras_rcnn.callbacks._tensorboard as callback
 import keras_rcnn.models as m
@@ -63,7 +64,6 @@ def main():
         ],
         generator=generator,
         validation_data=validation_data,
-        use_multiprocessing=False,
         validation_steps=50
     )
 
