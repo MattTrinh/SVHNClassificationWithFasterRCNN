@@ -51,14 +51,14 @@ def main():
     #K.set_learning_phase(1)
     
     # Show bounding boxes
-    #target, _ = generator.next()
-    #target_bounding_boxes, target_categories, target_images, target_masks, target_metadata = target
-    #target_bounding_boxes = numpy.squeeze(target_bounding_boxes)
-    #target_images = numpy.squeeze(target_images)
-    #target_categories = numpy.argmax(target_categories, -1)
-    #target_categories = numpy.squeeze(target_categories)
-    #keras_rcnn.utils.show_bounding_boxes(target_images, target_bounding_boxes, target_categories)
-        
+    """ target, _ = generator.next()
+    target_bounding_boxes, target_categories, target_images, target_masks, target_metadata = target
+    target_bounding_boxes = np.squeeze(target_bounding_boxes)
+    target_images = np.squeeze(target_images)
+    target_categories = np.argmax(target_categories, -1)
+    target_categories = np.squeeze(target_categories)
+    keras_rcnn.utils.show_bounding_boxes(target_images, target_bounding_boxes, target_categories)
+         """
     # Build R-CNN
     model = m.RCNN(
         categories=categories,
@@ -69,18 +69,18 @@ def main():
     # Train R-CNN
     optimizer = keras.optimizers.Adam()
     model.compile(
-        optimizer
-        #metrics=['accuracy', met.evaluate]
+        optimizer,
+        metrics=['accuracy', met.evaluate]
     )
-    history = model.fit_generator(
+    model.fit_generator(
         epochs=1,
-        steps_per_epoch=50,
-        callbacks = [
-            keras.callbacks.LearningRateScheduler(schedule)
-        ],
+        steps_per_epoch=20,
         generator=generator,
         validation_data=validation_data,
-        validation_steps=50
+        validation_steps=20,
+        callbacks = [
+            keras.callbacks.LearningRateScheduler(schedule)
+        ]
     )
     
     # Save model weights
@@ -88,6 +88,8 @@ def main():
     # refer to documentation here (https://www.tensorflow.org/guide/keras/save_and_serialize#saving_subclassed_models) 
     # for more details
     model.save_weights(WEIGHT_DIR + "/epoch_1_images_50.h5")
+    timeElapsed = datetime.now()-start
+    print(("Run completed in %4d" % timeElapsed.seconds) + " seconds at " + datetime.now().strftime("%Y%m%d-%H%M%S"))
     
 def load(file_name):
     # Build model
@@ -107,10 +109,10 @@ def load(file_name):
     )
     
     optimizer = keras.optimizers.Adam()
-    model.compile(optimizer)
+    model.compile(optimizer, metrics=['accuracy', met.evaluate])
     
     # Initialize variables used by optimizers
-    model.fit_generator(
+    history = model.fit_generator(
         epochs=1,
         steps_per_epoch=1,
         generator=generator
@@ -123,9 +125,8 @@ def load(file_name):
 
     
     
-    runTime = datetime.now() - start
+    
 
-    print("Run completed in " + runTime.seconds + " seconds at " + datetime.now.strftime("%Y%m%d-%H%M%S"))
 
 if __name__ == "__main__":
     main()
