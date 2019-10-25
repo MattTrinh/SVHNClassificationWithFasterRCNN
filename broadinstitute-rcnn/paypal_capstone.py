@@ -54,7 +54,7 @@ def main():
     )
     
     # Train R-CNN
-    optimizer = keras.optimizers.Adam()
+    optimizer = keras.optimizers.Adam(lr=1e-4)
     model.compile(optimizer)
     model.fit_generator(
         epochs=1,
