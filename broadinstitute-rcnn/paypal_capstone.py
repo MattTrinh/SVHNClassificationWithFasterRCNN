@@ -6,7 +6,7 @@ import tensorflow as tf
 import h5py
 from datetime import datetime
 import os
-
+from matplotlib import pyplot
 import keras_rcnn
 import keras_rcnn.datasets.svhn as ds
 import keras_rcnn.callbacks._tensorboard as callback
@@ -67,22 +67,21 @@ def main():
     )
     
     # Train R-CNN
-    optimizer = keras.optimizers.Adam()
-    model.compile(
-        optimizer,
-        metrics=['accuracy', met.evaluate]
-    )
-    model.fit_generator(
+    optimizer = keras.optimizers.Adam(lr=1e-4)
+    model.compile(optimizer, metrics=['acc'])
+    history = model.fit_generator(
         epochs=1,
         steps_per_epoch=20,
         generator=generator,
         validation_data=validation_data,
         validation_steps=20,
-        callbacks = [
-            keras.callbacks.LearningRateScheduler(schedule)
-        ]
+        verbose=2
+        #callbacks = [
+        #    keras.callbacks.LearningRateScheduler(schedule)
+        #]
     )
-    
+    pyplot.plot(history.history['acc'])
+    pyplot.show()
     # Save model weights
     # Do not use "model.save()" because this implementation is considered a 'subclassed model'
     # refer to documentation here (https://www.tensorflow.org/guide/keras/save_and_serialize#saving_subclassed_models) 
