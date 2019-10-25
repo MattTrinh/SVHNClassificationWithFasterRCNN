@@ -1,6 +1,7 @@
 import numpy
-import time
-
+import datetime
+import tensorflow as tf
+from tensorflow import keras
 def intersection_over_union(y_true, y_pred):
     """
     :param y_pred: [minimum_r, minimum_c, maximum_r, maximum_c]
@@ -10,6 +11,7 @@ def intersection_over_union(y_true, y_pred):
 
     """
     print("Calculating IoU")
+    
     y_true_minimum_r, y_true_minimum_c, y_true_maximum_r, y_true_maximum_c = y_true
     y_pred_minimum_r, y_pred_minimum_c, y_pred_maximum_r, y_pred_maximum_c = y_pred
 
@@ -95,7 +97,8 @@ def evaluate(y_true, y_pred, threshold=0.5):
         accuracy = 0.0
 
     print("Finished avg_precision calculation. Metrics: FN: %d, FP: %d, TP: %d" %(fn, fp, tp))
-    print("Precision: %5.2f, Recall: %5.2f, Threshold: %5.2f, Accuracy: %5.2f")
+    print("Precision: %5.2f, Recall: %5.2f, Threshold: %5.2f, Accuracy: %5.2f"%(precision, recall, threshold, accuracy))
+    
 
     return {
         "false negatives": fn,
